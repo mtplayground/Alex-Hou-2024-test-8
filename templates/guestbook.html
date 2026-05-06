@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guestbook</title>
+  </head>
+  <body>
+    <main>
+      <h1>Guestbook</h1>
+
+      <form action="/messages" method="post">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required>
+
+        <label for="text">Message</label>
+        <textarea id="text" name="text" rows="4" required></textarea>
+
+        <button type="submit">Sign guestbook</button>
+      </form>
+
+      <section aria-labelledby="messages-heading">
+        <h2 id="messages-heading">Messages</h2>
+
+        {% if messages %}
+          <ul>
+            {% for message in messages %}
+              <li>
+                <article>
+                  <header>
+                    <strong>{{ message.name }}</strong>
+                    <time datetime="{{ message.created_at.isoformat() }}">{{ message.created_at.strftime("%Y-%m-%d %H:%M:%S %Z") }}</time>
+                  </header>
+                  <p>{{ message.text }}</p>
+                </article>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No messages yet.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>
